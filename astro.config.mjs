@@ -1,23 +1,29 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
-import react from '@astrojs/react';
+import react from "@astrojs/react";
 
-import solidJs from '@astrojs/solid-js';
+import solidJs from "@astrojs/solid-js";
 
-import vue from '@astrojs/vue';
+import vue from "@astrojs/vue";
 
-import sitemap from '@astrojs/sitemap';
+import sitemap from "@astrojs/sitemap";
 
-import partytown from '@astrojs/partytown';
+import partytown from "@astrojs/partytown";
 
-import tailwindcss from '@tailwindcss/vite';
+import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react(), solidJs(), vue(), sitemap(), partytown()],
+  integrations: [
+    react({ include: ["**/react/*"] }),
+    solidJs({ include: ["**/solid/*"] }),
+    vue({ include: ["**/vue/*"] }),
+    sitemap(),
+    partytown(),
+  ],
 
   vite: {
-    plugins: [tailwindcss()]
-  }
+    plugins: [tailwindcss()],
+  },
 });

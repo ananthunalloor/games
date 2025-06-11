@@ -1,8 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { TicTacToe } from "./tic-tac-toe/tic-tac-toe";
+import { TicTacToe } from "../games/react/tic-tac-toe/tic-tac-toe";
 ---
 
 <Layout>
-  <TicTacToe />
+  <TicTacToe client:only="react" />
 </Layout>
