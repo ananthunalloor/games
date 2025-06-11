@@ -11,7 +11,13 @@ import sitemap from '@astrojs/sitemap';
 
 import partytown from '@astrojs/partytown';
 
+import tailwindcss from '@tailwindcss/vite';
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react(), solidJs(), vue(), sitemap(), partytown()]
+  integrations: [react(), solidJs(), vue(), sitemap(), partytown()],
+
+  vite: {
+    plugins: [tailwindcss()]
+  }
 });
