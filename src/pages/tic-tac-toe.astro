@@ -1,0 +1,9 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { TicTacToe as G } from "../games/react/tic-tac-toe/tic-tac-toe";
+import TicTacToeLayout from "@/layouts/TicTacToeLayout.astro";
+---
+
+<TicTacToeLayout>
+  <G client:only="react" />
+</TicTacToeLayout>

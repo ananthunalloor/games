@@ -1,8 +1,47 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { TicTacToe } from "../games/react/tic-tac-toe/tic-tac-toe";
+
+const gameList = [
+  {
+    name: "Tic Tac Toe",
+    description: "A classic game of Tic Tac Toe built with React.",
+    img: "/tic-tac-toe.png",
+    url: "/tic-tac-toe",
+  },
+];
 ---
 
 <Layout>
-  <TicTacToe client:only="react" />
+  <section class="flex flex-col items-center h-full max-w-4xl mx-auto p-6">
+    <h1 class="text-4xl font-bold mb-8">Welcome to the Game Hub</h1>
+    <p class="text-lg mb-4">
+      Explore various games built with Astro, React, Vue ang JS.
+    </p>
+    <div class="flex flex-row flex-wrap grow gap-4">
+      {
+        gameList.map((game) => (
+          <div class="block max-w-sm max-h-min p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+              {game.name}
+            </h5>
+            <p class="font-normal text-gray-700 dark:text-gray-400">
+              {game.description}
+            </p>
+            <a
+              href={game.url}
+              class="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600"
+            >
+              Play the game here
+              <span
+                aria-hidden="true"
+                class="block transition-all group-hover:ms-0.5 rtl:rotate-180"
+              >
+                &rarr;
+              </span>
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </section>
 </Layout>
