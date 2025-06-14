@@ -25,6 +25,7 @@ export const TicTacToe = () => {
   const [isGameOver, setIsGameOver] = useState(false);
   const [currentPlayer, setCurrentPlayer] = useState(initialPlayer.current);
   const [board, setBoard] = useState<BoardType>(new Map<number, string>());
+  const [winner, setWinner] = useState<string | null>(null);
 
   const [playerScores, setPlayerScores] = useState(
     new Map<string, number>([
@@ -38,6 +39,8 @@ export const TicTacToe = () => {
   }, [setCurrentPlayer]);
 
   const resetGame = useCallback(() => {
+    setIsGameOver(false);
+    setWinner(null);
     setBoard(new Map());
     initialPlayer.current =
       initialPlayer.current === player1 ? player2 : player1;
@@ -63,14 +66,14 @@ export const TicTacToe = () => {
             );
             return newScores;
           });
+          setWinner(currentPlayer);
           jsConfetti.addConfetti({});
           setIsGameOver(true);
-          // resetGame();
         }
       });
       if (currentBoard.size === 9) {
-        // resetGame();
         setIsGameOver(true);
+        setWinner(null);
       }
     },
     [currentPlayer, setPlayerScores, resetGame]
@@ -174,6 +177,7 @@ export const TicTacToe = () => {
         open={isGameOver}
         onNextGame={nextGameHandler}
         onRestart={restartGameHandler}
+        winner={winner}
       />
     </div>
   );

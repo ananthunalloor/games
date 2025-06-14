@@ -12,19 +12,17 @@ import {
 export interface GameEndDialogProps {
   onClose?: () => void;
   open: boolean;
-  title?: string;
-  description?: string;
   onRestart?: () => void;
   onNextGame?: () => void;
+  winner?: string | null;
 }
 
 export const GameEndDialog = ({
   onClose,
   open,
-  title,
-  description,
   onRestart,
   onNextGame,
+  winner,
 }: GameEndDialogProps) => {
   const handleRestart = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,21 +36,34 @@ export const GameEndDialog = ({
     onClose?.();
   };
 
+  const title = winner ? `Yay! Player${winner} wins!` : "Game Draw 😢";
+
+  const description =
+    "The game has ended. You can restart or move to the next game.";
+
   return (
-    <Dialog open={open} onOpenChange={onClose}>
+    <Dialog open={open}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you&apos;re done.
-          </DialogDescription>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4"></div>
         <DialogFooter>
           <DialogClose asChild>
-            <button onClick={handleRestart}>Restart</button>
+            <button
+              className="px-4 py-2 rounded-md border-2 border-blue-500 bg-blue-400 text-white text-sm hover:-translate-y-1 transform transition duration-200 hover:shadow-md"
+              onClick={handleRestart}
+            >
+              Restart
+            </button>
           </DialogClose>
-          <button onClick={handleNextGame}>Next game</button>
+          <button
+            tabIndex={-1}
+            className="px-4 py-2 rounded-md border-2 border-green-500 bg-green-400 text-white text-sm hover:-translate-y-1 transform transition duration-200 hover:shadow-md"
+            onClick={handleNextGame}
+          >
+            Next game
+          </button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
