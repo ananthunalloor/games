@@ -36,14 +36,14 @@ export const GameEndDialog = ({
     onClose?.();
   };
 
-  const title = winner ? `Yay! Player${winner} wins!` : "Game Draw 😢";
+  const title = winner ? `Yay! Player ${winner} wins!` : "Game Draw 😢";
 
   const description =
     "The game has ended. You can restart or move to the next game.";
 
   return (
     <Dialog open={open}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] [&>button]:hidden">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
