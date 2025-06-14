@@ -1,5 +1,6 @@
 import JSConfetti from "js-confetti";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { GameEndDialog } from "./game-end-dialog";
 
 type BoardType = Map<number, string>;
 
@@ -20,8 +21,9 @@ const winCombinations = [
 export const TicTacToe = () => {
   const jsConfetti = new JSConfetti();
   const initialPlayer = useRef<string>(Math.random() < 0.5 ? player1 : player2);
-  const [currentPlayer, setCurrentPlayer] = useState(initialPlayer.current);
 
+  const [isGameOver, setIsGameOver] = useState(false);
+  const [currentPlayer, setCurrentPlayer] = useState(initialPlayer.current);
   const [board, setBoard] = useState<BoardType>(new Map<number, string>());
 
   const [playerScores, setPlayerScores] = useState(
@@ -62,11 +64,13 @@ export const TicTacToe = () => {
             return newScores;
           });
           jsConfetti.addConfetti({});
-          resetGame();
+          setIsGameOver(true);
+          // resetGame();
         }
       });
       if (currentBoard.size === 9) {
-        resetGame();
+        // resetGame();
+        setIsGameOver(true);
       }
     },
     [currentPlayer, setPlayerScores, resetGame]
@@ -87,6 +91,22 @@ export const TicTacToe = () => {
     },
     [switchPlayer, currentPlayer, board, setBoard, checkWin]
   );
+
+  const restartGameHandler = useCallback(() => {
+    setIsGameOver(false);
+    setPlayerScores(
+      new Map<string, number>([
+        [player1, 0],
+        [player2, 0],
+      ])
+    );
+    resetGame();
+  }, [setIsGameOver, setPlayerScores, resetGame]);
+
+  const nextGameHandler = useCallback(() => {
+    setIsGameOver(false);
+    resetGame();
+  }, [setIsGameOver, resetGame]);
 
   return (
     <div className="flex flex-col items-center h-full max-w-sm md:max-w-lg mx-auto gap-4">
@@ -150,6 +170,11 @@ export const TicTacToe = () => {
           ))}
         </div>
       </div>
+      <GameEndDialog
+        open={isGameOver}
+        onNextGame={nextGameHandler}
+        onRestart={restartGameHandler}
+      />
     </div>
   );
 };
